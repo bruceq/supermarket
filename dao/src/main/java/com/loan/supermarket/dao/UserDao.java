@@ -17,4 +17,6 @@ public interface UserDao {
     User queryUserById(Long id);
 
     List<User> queryUserList();
+
+    List<User> queryUserByName(String name);
 }

@@ -2,6 +2,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.loan.supermarket.dao.UserDao;
 import com.loan.supermarket.mapper.User;
+import com.loan.supermarket.service.UserServiece;
 import com.loan.supermarket.web.Application;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -10,12 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.List;
-@Ignore
+
+//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Application.class)
 public class MyBatisTest {
-
+    @Autowired
+    UserServiece userServiece;
+//
 //    @Autowired
 //    private UserDao userDao;
 //
@@ -26,11 +31,14 @@ public class MyBatisTest {
 //     */
 //    @Test
 //    public void testAddUser() throws Exception {
-////        User user = new User();
-////        user.setId(820L);
-////        user.setName("zhangsan21");
-////        user.setAge(12);
-////        userDao.addUser(user);
+//        User user3 = new User();
+//        user3.setName("赵六");
+//        user3.setId(4L);
+//        user3.setTelephone("33333333333");
+//        user3.setPassword("过河卒");
+//        user3.setRegisterTime(new Date());
+//        user3.setPopedom(0);
+//        userDao.addUser(user3);
 //    }
 //
 //    /**
@@ -88,4 +96,36 @@ public class MyBatisTest {
 //            System.out.println(user.getName());
 //        }
 //    }
+
+//    /**
+//     * 查询所有用户
+//     *
+//     * @throws Exception
+//     */
+//    @Test
+//    public void testQueryUserList() throws Exception {
+//        int pageNum = 1;
+//        int pageSize = 1;
+//        PageHelper.startPage(pageNum, pageSize);
+//        List<User> userList = userServiece.getUser();;
+//        PageInfo<User> pageInfo = new PageInfo<>(userList);
+//        System.out.println("总共条数：" + pageInfo.getTotal());
+//        for (User user : pageInfo.getList()) {
+//            System.out.println(user.getName());
+//        }
+//    }
+    @Test
+    public void queryUserByName() throws Exception {
+        int pageNum = 1;
+        int pageSize = 1;
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> userList = userServiece.queryUserByName("张三");
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        System.out.println("总共条数：" + pageInfo.getTotal());
+        for (User user : pageInfo.getList()) {
+            System.out.println(user.getName());
+            System.out.println(user.getPassword());
+        }
+    }
+
 }

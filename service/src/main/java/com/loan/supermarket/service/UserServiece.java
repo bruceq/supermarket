@@ -15,4 +15,9 @@ public class UserServiece {
     public List<User> getUser(){
         return userDao.queryUserList();
     }
+
+    public List<User> queryUserByName(String name){
+        return userDao.queryUserByName(name);
+    }
+
 }

@@ -8,16 +8,20 @@
         <result column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="age" property="age"/>
+        <result column="telephone" property="telephone"/>
+        <result column="password" property="password"/>
+        <result column="registerTime" property="registerTime"/>
+        <result column="popedom" property="popedom"/>
     </resultMap>
 
     <!-- th_role_user table all fields -->
     <sql id="Base_Column_List">
-      id, name, age
+      id, name, age, telephone, password, registerTime, popedom
     </sql>
 
     <insert id="addUser" parameterType="com.loan.supermarket.mapper.User">
-      insert into t_user (id, name, age)
-      values (#{id},#{name},#{age});
+      insert into t_user (id, name, age, telephone, password, registerTime, popedom)
+      values (#{id},#{name},#{age},#{telephone},#{password},#{registerTime},#{popedom});
     </insert>
 
     <delete id="deleteUserById" parameterType="java.lang.Long">
@@ -48,8 +52,14 @@
 
     <select id="queryUserList" resultMap="BaseResultMap">
         select
-         id, name, age
+         id, name, age, telephone, password, registerTime, popedom
         from t_user
     </select>
+    <select id="queryUserByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user where name = #{name}
+    </select>
+
 
 </mapper>

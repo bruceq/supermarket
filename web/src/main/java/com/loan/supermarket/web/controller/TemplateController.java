@@ -3,6 +3,7 @@ package com.loan.supermarket.web.controller;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.loan.supermarket.mapper.JsonObject;
 import com.loan.supermarket.mapper.User;
+import com.loan.supermarket.service.UserServiece;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,49 +20,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 @Controller
 public class TemplateController {
+    @Autowired
+    UserServiece userServiece;
 
     @RequestMapping("/index")
     public String index(Model model) {
-        User user = new User();
-        user.setName("张三");
-        user.setId(1L);
-        user.setTelephone("123456789");
-        user.setPassword("@#$%^&*()");
-        user.setRegisterTime(new Date());
-        user.setPopedom(1);
-        User user1 = new User();
-        user1.setName("李四");
-        user1.setId(2L);
-        user1.setTelephone("2222222");
-        user1.setPassword("最近是南风天");
-        user1.setRegisterTime(new Date());
-        user1.setPopedom(1);
-        User user2 = new User();
-        user2.setName("王五");
-        user2.setId(3L);
-        user2.setTelephone("33333333333");
-        user2.setPassword("妖姬");
-        user2.setRegisterTime(new Date());
-        user2.setPopedom(1);
-        User user3 = new User();
-        user3.setName("赵六");
-        user3.setId(4L);
-        user3.setTelephone("33333333333");
-        user3.setPassword("过河卒");
-        user3.setRegisterTime(new Date());
-        user3.setPopedom(0);
-        ArrayList<User> list = new ArrayList<User>();
-        list.add(user);
-        list.add(user1);
-        list.add(user2);
-        list.add(user3);
+        List<User> list = userServiece.getUser();
         model.addAttribute("users", list);
-
         return "index";
     }
 
@@ -75,12 +44,16 @@ public class TemplateController {
     public JsonObject<String> login(String username, String password, HttpServletRequest request) {
         JsonObject<String> obj = new JsonObject<String>();
         HttpSession session = request.getSession();
-        if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
-            obj.setCode("0");
-            User user = new User();
-            user.setName(username);
-            session.setAttribute("loginUser", user);
-            return obj;
+        List<User> userList = userServiece.queryUserByName(username);
+        for (User userTmp : userList) {
+            if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password) && userTmp.getPassword().equals(password)) {
+                obj.setCode("0");
+                User user = new User();
+                user.setName(username);
+                System.out.println(username);
+                session.setAttribute("loginUser", user);
+                return obj;
+            }
         }
         obj.setCode("1");
         obj.setMessage("用户名或密码错误");
@@ -89,14 +62,16 @@ public class TemplateController {
 
     @Autowired
     private DefaultKaptcha captchaProducer;
+
     /**
      * 获取验证码 的 请求路径
+     *
      * @param httpServletRequest
      * @param httpServletResponse
      * @throws Exception
      */
     @RequestMapping("/defaultKaptcha")
-    public void defaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception{
+    public void defaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
         byte[] captchaChallengeAsJpeg = null;
         ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
         try {
@@ -127,16 +102,17 @@ public class TemplateController {
 
     /**
      * 验证的方法
+     *
      * @param httpServletRequest
      * @param httpServletResponse
      * @return
      */
     @RequestMapping("/imgvrifyControllerDefaultKaptcha")
-    public ModelAndView imgvrifyControllerDefaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+    public ModelAndView imgvrifyControllerDefaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         ModelAndView andView = new ModelAndView();
         String captchaId = (String) httpServletRequest.getSession().getAttribute("vrifyCode");
         String parameter = httpServletRequest.getParameter("vrifyCode");
-        System.out.println("Session  vrifyCode "+captchaId+" form vrifyCode "+parameter);
+        System.out.println("Session  vrifyCode " + captchaId + " form vrifyCode " + parameter);
 
         if (!captchaId.equals(parameter)) {
             andView.addObject("info", "错误的验证码");
