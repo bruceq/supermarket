@@ -119,13 +119,15 @@ public class MyBatisTest {
         int pageNum = 1;
         int pageSize = 1;
         PageHelper.startPage(pageNum, pageSize);
-        List<User> userList = userServiece.queryUserByName("张三");
+        List<User> userList = userServiece.getUser();
         PageInfo<User> pageInfo = new PageInfo<>(userList);
         System.out.println("总共条数：" + pageInfo.getTotal());
-        for (User user : pageInfo.getList()) {
-            System.out.println(user.getName());
-            System.out.println(user.getPassword());
-        }
+//        System.out.println();
+        pageInfo.getList().forEach(p-> System.out.println(p.toString()));
+//        for (User user : pageInfo.getList()) {
+//            System.out.println(user.getName());
+//            System.out.println(user.getPassword());
+//        }
     }
 
 }

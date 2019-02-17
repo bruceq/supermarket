@@ -1,5 +1,7 @@
 package com.loan.supermarket.web.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.loan.supermarket.mapper.User;
 import com.loan.supermarket.service.UserServiece;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,12 @@ public class WebController {
     }
 
     @RequestMapping(value = "/user")
-    public List<User> getUsers() {
-        return userServiece.getUser();
+    public PageInfo<User> getUsers() {
+        int pageNum = 1;
+        int pageSize = 2;
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> userList = userServiece.getUser();
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        return pageInfo;
     }
 }
