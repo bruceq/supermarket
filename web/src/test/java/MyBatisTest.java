@@ -4,6 +4,7 @@ import com.loan.supermarket.dao.UserDao;
 import com.loan.supermarket.mapper.User;
 import com.loan.supermarket.service.UserServiece;
 import com.loan.supermarket.web.Application;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,12 +15,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Date;
 import java.util.List;
 
-//@Ignore
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Application.class)
 public class MyBatisTest {
     @Autowired
     UserServiece userServiece;
+
+    @Test
+    public void findByUsername() {
+//        System.out.println("hello");
+        User user = userServiece.findByUsername("admin");
+        Assert.assertNotNull(user);
+    }
 //
 //    @Autowired
 //    private UserDao userDao;
@@ -114,20 +122,20 @@ public class MyBatisTest {
 //            System.out.println(user.getName());
 //        }
 //    }
-    @Test
-    public void queryUserByName() throws Exception {
-        int pageNum = 1;
-        int pageSize = 1;
-        PageHelper.startPage(pageNum, pageSize);
-        List<User> userList = userServiece.getUser();
-        PageInfo<User> pageInfo = new PageInfo<>(userList);
-        System.out.println("总共条数：" + pageInfo.getTotal());
+//    @Test
+//    public void queryUserByName() throws Exception {
+//        int pageNum = 1;
+//        int pageSize = 1;
+//        PageHelper.startPage(pageNum, pageSize);
+//        List<User> userList = userServiece.getUser();
+//        PageInfo<User> pageInfo = new PageInfo<>(userList);
+//        System.out.println("总共条数：" + pageInfo.getTotal());
 //        System.out.println();
-        pageInfo.getList().forEach(p-> System.out.println(p.toString()));
+//        pageInfo.getList().forEach(p-> System.out.println(p.toString()));
 //        for (User user : pageInfo.getList()) {
 //            System.out.println(user.getName());
 //            System.out.println(user.getPassword());
 //        }
-    }
+//    }
 
 }

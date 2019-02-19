@@ -1,6 +1,7 @@
 package com.loan.supermarket.dao;
 
 import com.loan.supermarket.mapper.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface UserDao {
     List<User> queryUserList();
 
     List<User> queryUserByName(String name);
+
+    User findUserByUsername(@Param("username") String username);
 }

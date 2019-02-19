@@ -1,8 +1,13 @@
 package com.loan.supermarket.mapper;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
+    private Integer uid;
+    private String username;
+    private Set<Role> roles = new HashSet<>();
     private Long id;
     private String name;
     private Integer age;
@@ -10,6 +15,30 @@ public class User {
     private String password;
     private Date registerTime;
     private Integer popedom;
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public Long getId() {
         return id;

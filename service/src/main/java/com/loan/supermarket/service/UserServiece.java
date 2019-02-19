@@ -12,12 +12,16 @@ public class UserServiece {
     @Autowired
     private UserDao userDao;
 
-    public List<User> getUser(){
+    public List<User> getUser() {
         return userDao.queryUserList();
     }
 
-    public List<User> queryUserByName(String name){
+    public List<User> queryUserByName(String name) {
         return userDao.queryUserByName(name);
+    }
+
+    public User findByUsername(String username) {
+        return userDao.findUserByUsername(username);
     }
 
 }

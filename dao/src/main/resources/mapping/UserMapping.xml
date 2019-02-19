@@ -5,15 +5,36 @@
 <mapper namespace="com.loan.supermarket.dao.UserDao">
     <!-- Result Map-->
     <resultMap id="BaseResultMap" type="com.loan.supermarket.mapper.User">
-        <result column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="age" property="age"/>
-        <result column="telephone" property="telephone"/>
+
+        <!--<result column="id" property="id"/>-->
+        <!--<result column="name" property="name"/>-->
+        <!--<result column="age" property="age"/>-->
+        <!--<result column="telephone" property="telephone"/>-->
         <result column="password" property="password"/>
-        <result column="registerTime" property="registerTime"/>
-        <result column="popedom" property="popedom"/>
+        <!--<result column="registerTime" property="registerTime"/>-->
+        <!--<result column="popedom" property="popedom"/>-->
+        <result column="uid" property="uid"/>
+        <result column="username" property="username"/>
+        <collection property="roles" ofType="com.loan.supermarket.mapper.Role">
+            <id property="rid" column="rid"/>
+            <result property="rname" column="rname"/>
+            <collection property="permissions" ofType="com.loan.supermarket.mapper.Permission">
+                <id property="pid" column="pid"/>
+                <result property="name" column="name"/>
+                <result property="url" column="url"/>
+            </collection>
+        </collection>
     </resultMap>
 
+    <select id="findUserByUsername" parameterType="com.loan.supermarket.mapper.User" resultMap="BaseResultMap">
+      SELECT u.*, r.*, p.*
+      FROM USER u
+        INNER JOIN user_role ur ON ur.uid = u.uid
+        INNER JOIN role r ON r.rid = ur.rid
+        INNER JOIN permission_role pr ON pr.rid = r.rid
+        INNER JOIN permission p ON pr.pid = p.pid
+      WHERE u.username =  #{username}
+    </select>
     <!-- th_role_user table all fields -->
     <sql id="Base_Column_List">
       id, name, age, telephone, password, registerTime, popedom

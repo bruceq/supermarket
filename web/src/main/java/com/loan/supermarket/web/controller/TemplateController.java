@@ -27,17 +27,17 @@ public class TemplateController {
     @Autowired
     UserServiece userServiece;
 
-    @RequestMapping("/index")
-    public String index(Model model) {
-        List<User> list = userServiece.getUser();
-        model.addAttribute("users", list);
-        return "index";
-    }
+//    @RequestMapping("/index")
+//    public String index(Model model) {
+//        List<User> list = userServiece.getUser();
+//        model.addAttribute("users", list);
+//        return "index.htmlbac";
+//    }
 
-    @RequestMapping("/login")
-    public String login1() {
-        return "login";
-    }
+//    @RequestMapping("/login")
+//    public String login1() {
+//        return "login.html";
+//    }
 
     @PostMapping("/user_login")
     @ResponseBody
@@ -116,7 +116,7 @@ public class TemplateController {
 
         if (!captchaId.equals(parameter)) {
             andView.addObject("info", "错误的验证码");
-            andView.setViewName("index");
+            andView.setViewName("index.htmlbac");
         } else {
             andView.addObject("info", "登录成功");
             andView.setViewName("success");
