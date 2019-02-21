@@ -54,6 +54,10 @@ public class AuthRealm extends AuthorizingRealm {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         String username = usernamePasswordToken.getUsername();
         User user = userServiece.findByUsername(username);
-        return new SimpleAuthenticationInfo(user, user.getPassword(), this.getClass().getName());
+        if (null != user) {
+            return new SimpleAuthenticationInfo(user, user.getPassword(), this.getClass().getName());
+        } else {
+            return new SimpleAuthenticationInfo();
+        }
     }
 }

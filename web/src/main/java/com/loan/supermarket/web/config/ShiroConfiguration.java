@@ -3,13 +3,12 @@ package com.loan.supermarket.web.config;
 
 import com.loan.supermarket.web.shiro.AuthRealm;
 import com.loan.supermarket.web.utils.CredentialMatcher;
-import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,6 +41,7 @@ public class ShiroConfiguration {
         // login、loginUser表单不需要验证
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/loginUser", "anon");
+        filterChainDefinitionMap.put("/unauthorized", "anon");
 
         // admin表单需要角色 admin 才能访问
         filterChainDefinitionMap.put("/admin", "roles[admin]");

@@ -1,6 +1,8 @@
 package com.loan.supermarket.mapper;
 
-public class Permission {
+import java.io.Serializable;
+
+public class Permission implements Serializable {
     private Integer pid;
 
     private String name;
