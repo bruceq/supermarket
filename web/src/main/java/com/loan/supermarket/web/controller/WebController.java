@@ -26,7 +26,7 @@ public class WebController {
         int pageSize = 2;
         PageHelper.startPage(pageNum, pageSize);
         List<User> userList = userServiece.getUser();
-        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        PageInfo<User> pageInfo = new PageInfo<User>(userList);
         return pageInfo;
     }
 

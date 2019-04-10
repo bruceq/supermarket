@@ -23,8 +23,8 @@ public class AuthRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         // 获取User用户
         User user = (User) principals.fromRealm(this.getClass().getName()).iterator().next();
-        List<String> permissionList = new ArrayList<>();
-        List<String> roleNameList = new ArrayList<>();
+        List<String> permissionList = new ArrayList<String>();
+        List<String> roleNameList = new ArrayList<String>();
         Set<Role> roleSet = user.getRoles();
         if (roleSet != null) {
             for (Role role : roleSet) {

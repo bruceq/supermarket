@@ -18,7 +18,7 @@ public class TestController {
     private static final Logger log =
             LoggerFactory.getLogger(TestController.class);
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public String login() {
         return "login";
     }
@@ -74,7 +74,7 @@ public class TestController {
             // 用于界面输出
             session.setAttribute("user", user);
             log.info("{} is login !!", username);
-            return "index";
+            return "signin";
         } catch (Exception e) {
             log.error("{} has something wrong !!", username);
             return "404";
